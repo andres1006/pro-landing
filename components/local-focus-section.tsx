@@ -4,16 +4,14 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 gsap.registerPlugin(ScrollTrigger);
 
 // Deportes principales de Manizales
 const sports = [
-  { name: "Fútbol" },
-  { name: "Baloncesto" },
-  /*  { name: "Tenis", icon: "/icons/tenis.svg" },
-  { name: "Natación", icon: "/icons/natacion.svg" },
-  { name: "Ciclismo", icon: "/icons/ciclismo.svg" }, */
+  { name: "", image: "/assets/img-1.png" },
+  { name: "", image: "/assets/img-3.jpeg" },
 ];
 
 export function LocalFocusSection() {
@@ -24,7 +22,7 @@ export function LocalFocusSection() {
   useEffect(() => {
     if (!sectionRef.current) return;
 
-    const tl = gsap.timeline({
+    /*     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: sectionRef.current,
         start: "top 50%",
@@ -32,8 +30,8 @@ export function LocalFocusSection() {
         scrub: 1,
       },
     });
-
-    tl.fromTo(
+ */
+    /*    tl.fromTo(
       ".local-title",
       { opacity: 0, y: 50 },
       { opacity: 1, y: 0, duration: 0.8 }
@@ -49,10 +47,10 @@ export function LocalFocusSection() {
         { opacity: 0, scale: 0.9 },
         { opacity: 1, scale: 1, duration: 0.8 },
         "-=0.4"
-      );
+      ); */
 
     // Animación para los iconos de deportes
-    gsap.fromTo(
+    /*     gsap.fromTo(
       ".sport-icon",
       { opacity: 0, y: 20 },
       {
@@ -67,7 +65,7 @@ export function LocalFocusSection() {
           scrub: 1,
         },
       }
-    );
+    ); */
 
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
@@ -87,7 +85,7 @@ export function LocalFocusSection() {
       const y = (e.clientY - top) / height - 0.5;
 
       // Efecto parallax para los elementos del mapa
-      gsap.to(".map-element", {
+      /*       gsap.to(".map-element", {
         x: x * 20,
         y: y * 20,
         duration: 1,
@@ -100,7 +98,7 @@ export function LocalFocusSection() {
         rotationX: -y * 5,
         duration: 1,
         ease: "power2.out",
-      });
+      }); */
     };
 
     window.addEventListener("mousemove", handleMouseMove);
@@ -123,37 +121,39 @@ export function LocalFocusSection() {
           {/* Sección de texto */}
           <div className="w-full lg:w-1/2 order-2 lg:order-1">
             <h2 className="local-title text-3xl sm:text-4xl md:text-5xl font-bold mb-6 sm:mb-8 text-black dark:text-white font-heading">
-              Hecho Pensando en Nuestra Ciudad
+              Pensado para deportistas de apasionados
             </h2>
 
             <p className="local-text text-lg sm:text-xl text-black dark:text-white leading-relaxed mb-6 sm:mb-8">
-              PRO nace con un profundo conocimiento de la cultura deportiva de
-              Manizales. Nos enfocamos primero en los deportes más queridos
-              aquí: fútbol, tenis, natación, baloncesto, ciclismo. Queremos ser
-              la plataforma que une y potencia a cada deportista apasionado de
-              nuestra tierra.
+              <span className="font-bold">PRO</span> nace con un profundo
+              conocimiento de la cultura deportiva. Nos enfocamos primero en los
+              deportes más queridos aquí: fútbol, tenis, natación, baloncesto,
+              ciclismo. Queremos ser la plataforma que une y potencia a cada
+              deportista apasionado de nuestra tierra.
             </p>
 
-            {/* Iconos de deportes */}
-            <div className="sports-container grid grid-cols-2 sm:grid-cols-5 gap-4 mt-8 sm:mt-10">
+            {/* Grid de deportes con imágenes */}
+            <div className="sports-container grid grid-cols-2 sm:grid-cols-2 gap-4 mt-8 sm:mt-10">
               {sports.map((sport, index) => (
                 <motion.div
                   key={index}
-                  className="sport-icon flex flex-col items-center"
-                  whileHover={{ scale: 1.1 }}
+                  className="sport-icon group relative overflow-hidden rounded-xl"
+                  whileHover={{ scale: 1.02 }}
                 >
-                  <div className="w-12 h-12 sm:w-16 sm:h-16 relative flex items-center justify-center mb-2 bg-white/5 rounded-xl">
-                    <div
-                      className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br ${
-                        index % 2 === 0
-                          ? "from-[#64ffda] to-[#b794f4]"
-                          : "from-[#b794f4] to-[#64ffda]"
-                      }`}
-                    ></div>
+                  <div className="relative aspect-[4/3]">
+                    <Image
+                      src={sport.image}
+                      alt={sport.name}
+                      fill
+                      className="object-cover transition-transform duration-300 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                    <div className="absolute bottom-0 left-0 right-0 p-4">
+                      <span className="text-white font-medium text-sm sm:text-base">
+                        {sport.name}
+                      </span>
+                    </div>
                   </div>
-                  <span className="text-xs sm:text-sm font-medium text-black dark:text-white">
-                    {sport.name}
-                  </span>
                 </motion.div>
               ))}
             </div>

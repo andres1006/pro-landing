@@ -15,7 +15,7 @@ export default function Home() {
       <ChallengeSection />
       <FeaturesSection />
       <SolutionSection />
-      {/*       <LocalFocusSection /> */}
+      <LocalFocusSection />
       <RegistrationForm />
       <Footer />
     </main>
