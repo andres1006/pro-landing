@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://promanizales.com/sitemap.xml
+
+# Optimización para Google
+Allow: /assets/
+Allow: /images/
+Allow: /icons/
+
+# Evitar rastreo de rutas innecesarias
+Disallow: /api/
+Disallow: /admin/
+Disallow: /private/ 
