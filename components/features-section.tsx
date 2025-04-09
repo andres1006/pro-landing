@@ -158,7 +158,7 @@ export function FeaturesSection() {
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="features-title text-4xl md:text-5xl font-bold mb-6 text-black dark:text-white ">
-            Todo lo que Necesitas para Brillar en Manizales
+            Todo lo que necesitas para vivir tu pasión como un profesional
           </h2>
           <p className="text-xl  max-w-3xl mx-auto text-black dark:text-white">
             PRO está diseñado para potenciar tu experiencia deportiva con

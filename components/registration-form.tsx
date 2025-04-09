@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2, CheckCircle2, ChevronDown, Link } from "lucide-react";
+import { Loader2, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -112,10 +112,13 @@ export function RegistrationForm() {
   // Lista de deportes
   const sports = [
     "Fútbol",
+    "Baloncesto",
+    "Voleybol",
     "Tenis",
     "Ciclismo",
     "Natación",
-    "Baloncesto",
+    "Running",
+    "Atletismo",
     "Otro",
   ];
 
@@ -151,12 +154,13 @@ export function RegistrationForm() {
             className="text-center mb-12"
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6 text-black dark:text-white font-heading">
-              ¿ Listo para Ser Parte de la Revolución Deportiva en Manizales ?
+              ¿ Listo para ser parte de la revolución deportiva en Manizales ?
             </h2>
             <p className="text-xl text-black dark:text-white">
-              Únete AHORA a la lista de espera de PRO Manizales. Serás el
-              primero en saber cuándo lanzamos, tendrás acceso anticipado y
-              beneficios exclusivos por ser fundador. ¡No te quedes por fuera!
+              Únete AHORA a la lista de espera de PRO. Serás el primero en saber
+              cuándo lanzamos, tendrás acceso anticipado y beneficios exclusivos
+              por ser uno de los pioneros de la revolución deportiva. ¡No te
+              quedes por fuera!
             </p>
           </motion.div>
 
@@ -328,7 +332,7 @@ export function RegistrationForm() {
                     <Button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full bg-gradient-to-r from-[#64ffda] via-[#b794f4] to-[#64ffda] hover:from-[#64ffda]/90 hover:via-[#b794f4]/90 hover:to-[#64ffda]/90 text-white text-lg py-6 rounded-xl transition-all duration-300 relative overflow-hidden group"
+                      className="w-full bg-gradient-to-r from-[#4cbaf0] via-[#8955e4] to-[#4cbaf0] hover:from-[#4cbaf0]/90 hover:via-[#8955e4]/90 hover:to-[#4cbaf0]/90 text-white text-lg py-6 rounded-xl transition-all duration-300 relative overflow-hidden group"
                     >
                       <span className="relative z-10">
                         {isSubmitting
@@ -337,7 +341,7 @@ export function RegistrationForm() {
                       </span>
 
                       {/* Efecto de hover */}
-                      <span className="absolute inset-0 h-full w-full bg-gradient-to-r from-[#b794f4] via-[#64ffda] to-[#b794f4] [mask-image:radial-gradient(circle,transparent_50%,black_100%)] group-hover:[mask-image:radial-gradient(circle,black_50%,transparent_100%)] opacity-0 group-hover:opacity-100 transition-all duration-700"></span>
+                      <span className="absolute inset-0 h-full w-full bg-gradient-to-r from-[#8955e4] via-[#4cbaf0] to-[#8955e4] [mask-image:radial-gradient(circle,transparent_50%,black_100%)] group-hover:[mask-image:radial-gradient(circle,black_50%,transparent_100%)] opacity-0 group-hover:opacity-100 transition-all duration-700"></span>
 
                       {isSubmitting && (
                         <Loader2

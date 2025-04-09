@@ -49,7 +49,7 @@ export function Footer() {
             </p>
 
             {/* Selector de idioma */}
-            <div className="flex items-center space-x-2 mt-auto text-black dark:text-white">
+            {/*          <div className="flex items-center space-x-2 mt-auto text-black dark:text-white">
               <Globe size={18} className="text-gray-400 dark:text-white" />
               <Select value={language} onValueChange={handleLanguageChange}>
                 <SelectTrigger className="w-32 bg-transparent border-gray-400 dark:border-white text-black dark:text-white focus:ring-0">
@@ -60,11 +60,11 @@ export function Footer() {
                   <SelectItem value="en">English</SelectItem>
                 </SelectContent>
               </Select>
-            </div>
+            </div> */}
           </div>
 
           {/* Enlaces */}
-          <div className="md:col-span-2">
+          {/*      <div className="md:col-span-2">
             <h4 className="text-black dark:text-white font-bold mb-4">PRO</h4>
             <ul className="space-y-2">
               <li>
@@ -100,9 +100,9 @@ export function Footer() {
                 </a>
               </li>
             </ul>
-          </div>
+          </div> */}
 
-          <div className="md:col-span-2">
+          {/*          <div className="md:col-span-2">
             <h4 className="text-black dark:text-white font-bold mb-4">Ayuda</h4>
             <ul className="space-y-2">
               <li>
@@ -130,9 +130,9 @@ export function Footer() {
                 </a>
               </li>
             </ul>
-          </div>
+          </div> */}
 
-          <div className="md:col-span-2">
+          {/*           <div className="md:col-span-2">
             <h4 className="text-black dark:text-white font-bold mb-4">Legal</h4>
             <ul className="space-y-2">
               <li>
@@ -160,10 +160,10 @@ export function Footer() {
                 </a>
               </li>
             </ul>
-          </div>
+          </div> */}
 
           {/* Redes sociales */}
-          <div className="md:col-span-2">
+          {/*           <div className="md:col-span-2">
             <h4 className="text-black dark:text-white font-bold mb-4">
               Conecta
             </h4>
@@ -201,7 +201,7 @@ export function Footer() {
                 <Github size={20} />
               </motion.a>
             </div>
-          </div>
+          </div> */}
         </div>
 
         <div className="mt-12 pt-8 border-t border-white/10 text-center text-gray-500 text-sm">

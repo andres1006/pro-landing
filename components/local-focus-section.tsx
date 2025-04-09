@@ -121,15 +121,17 @@ export function LocalFocusSection() {
           {/* Sección de texto */}
           <div className="w-full lg:w-1/2 order-2 lg:order-1">
             <h2 className="local-title text-3xl sm:text-4xl md:text-5xl font-bold mb-6 sm:mb-8 text-black dark:text-white font-heading">
-              Pensado para deportistas de apasionados
+              Pensado para deportistas apasionados
             </h2>
 
             <p className="local-text text-lg sm:text-xl text-black dark:text-white leading-relaxed mb-6 sm:mb-8">
-              <span className="font-bold">PRO</span> nace con un profundo
-              conocimiento de la cultura deportiva. Nos enfocamos primero en los
-              deportes más queridos aquí: fútbol, tenis, natación, baloncesto,
-              ciclismo. Queremos ser la plataforma que une y potencia a cada
-              deportista apasionado de nuestra tierra.
+              <span className="font-bold">PRO</span> nace del corazón y la
+              pasión por el deporte en nuestra ciudad. Creemos que cada gota de
+              sudor, cada minuto de entrenamiento y cada sueño deportivo merece
+              brillar. Estamos aquí para conectar almas apasionadas, celebrar
+              victorias personales y construir una comunidad donde el espíritu
+              deportivo trascienda más allá de las canchas. ¡Porque tu pasión
+              deportiva merece una plataforma a su altura!
             </p>
 
             {/* Grid de deportes con imágenes */}

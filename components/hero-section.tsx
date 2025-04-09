@@ -125,16 +125,16 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={titleInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-xl md:text-3xl font-bold mb-4 font-heading text-white text-shadow-lg"
+            className="text-2xl md:text-3xl font-bold mb-4 font-heading text-white text-shadow-lg"
           >
-            Vive el Deporte Aficionado en Manizales Como Profesional
+            Vive el Deporte Aficionado como un profesional
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={titleInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="text-xl md:text-2xl text-gray-100 mt-6 max-w-3xl mx-auto text-shadow"
+            className="text-xl md:text-xl text-gray-100 mt-6 max-w-3xl mx-auto text-shadow"
           >
             La app para conectar, organizar, medir tu rendimiento y elevar tu
             pasión por el deporte aquí, en nuestra ciudad.

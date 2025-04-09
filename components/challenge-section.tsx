@@ -68,7 +68,7 @@ export function ChallengeSection() {
     icons.forEach((icon) => {
       icon.addEventListener("mouseenter", () => {
         gsap.to(icon, {
-          y: -10,
+          y: -5,
           scale: 1.1,
           duration: 0.3,
           ease: "power2.out",
@@ -137,14 +137,17 @@ export function ChallengeSection() {
       <div className="container mx-auto px-6">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="challenge-title text-4xl md:text-5xl font-bold mb-8 font-heading">
-            Tu Pasión Merece Más, ¿Verdad?
+            Tu pasión merece más ¿verdad?
           </h2>
 
           <p className="challenge-text text-xl md:text-2xl mb-16">
-            En Manizales amamos el deporte, pero organizar partidos, encontrar
-            gente para jugar, saber dónde entrenar y medir tu progreso como los
-            profesionales puede ser un reto. Te falta la herramienta que
-            centralice tu vida deportiva.
+            Si te apasiona el deporte, sabrás que organizar tus actividades,
+            encontrar personas con quien practicar o competir, ubicar lugares
+            para entrenar y seguir tu progreso como los atletas de alto nivel
+            puede ser complicado.
+            <br></br>
+            Te falta la plataforma que reúna todo lo que necesitas para tu vida
+            deportiva.
           </p>
 
           {/* Iconos animados */}
@@ -160,10 +163,11 @@ export function ChallengeSection() {
                   <Calendar size={64} className="text-primary animate-float" />
                 </div>
               </div>
-              <h3 className="text-xl font-bold mb-2">Organización Caótica</h3>
+              <h3 className="text-xl font-bold mb-2">
+                ¡Más juego, menos estrés!{" "}
+              </h3>
               <p className="text-muted-foreground">
-                Coordinar horarios y confirmar asistencia se vuelve una
-                pesadilla
+                Encontrar y programar eventos deportivos, nunca fue tan fácil.
               </p>
             </div>
 
@@ -178,10 +182,10 @@ export function ChallengeSection() {
                   />
                 </div>
               </div>
-              <h3 className="text-xl font-bold mb-2">Progreso Invisible</h3>
+              <h3 className="text-xl font-bold mb-2">Progreso Visible</h3>
               <p className="text-muted-foreground">
-                Sin forma de medir tu evolución, es difícil mejorar tus
-                habilidades
+                Transformamos tus logros deportivos en inspiración para seguir
+                creciendo.
               </p>
             </div>
 
@@ -196,10 +200,10 @@ export function ChallengeSection() {
                   />
                 </div>
               </div>
-              <h3 className="text-xl font-bold mb-2">Dónde Jugar</h3>
+              <h3 className="text-xl font-bold mb-2">Retos deportivos</h3>
               <p className="text-muted-foreground">
-                Encontrar los mejores escenarios deportivos en Manizales
-                requiere tiempo
+                ¡Vive la emoción de superar desafíos junto a tus amigos y/o
+                equipo!
               </p>
             </div>
           </div>

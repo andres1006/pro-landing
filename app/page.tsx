@@ -12,9 +12,8 @@ export default function Home() {
     <main className="min-h-screen bg-background flex flex-col">
       <CountdownBanner />
       <HeroSection />
-      <ChallengeSection />
       <FeaturesSection />
-      <SolutionSection />
+      <ChallengeSection />
       <LocalFocusSection />
       <RegistrationForm />
       <Footer />
