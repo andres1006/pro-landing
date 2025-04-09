@@ -119,7 +119,10 @@ export function RegistrationForm() {
     "Natación",
     "Running",
     "Atletismo",
-    "Otro",
+    "Ultimate",
+    "Crossfit",
+    "Patinaje",
+    "Triatlón",
   ];
 
   return (
