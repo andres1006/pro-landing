@@ -85,7 +85,7 @@ export function RegistrationForm() {
             email: data.email,
             name: data.name || null,
             sport: watchedSport || null,
-            accept_terms: !!acceptTerms || false,
+            accept_terms: acceptTerms || false,
           },
         ]);
 
@@ -268,7 +268,6 @@ export function RegistrationForm() {
                       className="text-black dark:text-white font-medium"
                     >
                       Tu Nombre{" "}
-                      <span className="text-gray-400 text-sm">(Opcional)</span>
                     </Label>
                     <Input
                       id="name"
@@ -286,7 +285,6 @@ export function RegistrationForm() {
                       className="text-black dark:text-white font-medium"
                     >
                       Tu Deporte Principal{" "}
-                      <span className="text-gray-400 text-sm">(Opcional)</span>
                     </Label>
                     <Select
                       value={watchedSport}
