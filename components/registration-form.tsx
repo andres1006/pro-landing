@@ -121,6 +121,7 @@ export function RegistrationForm() {
     "Atletismo",
     "Ultimate",
     "Crossfit",
+    "Gym",
     "Patinaje",
     "Triatlón",
   ];
