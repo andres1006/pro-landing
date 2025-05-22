@@ -21,7 +21,7 @@ import ReactConfetti from "react-confetti";
 import { supabase } from "@/lib/supabase";
 
 // Validación del formulario con Zod
-const formSchema = z.object({
+export const formSchema = z.object({
   email: z.string().email("El correo electrónico no es válido"),
   name: z.string().optional(),
   sport: z.string().optional(),
