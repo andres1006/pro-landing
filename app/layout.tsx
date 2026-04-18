@@ -1,8 +1,9 @@
-import type { Metadata } from "next";
-import { Inter, Poppins } from "next/font/google";
+import { Inter, Poppins, Barlow_Condensed } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ThemeToggle } from "@/components/theme-toggle";
+
+export { metadata } from "./metadata";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const poppins = Poppins({
@@ -10,12 +11,11 @@ const poppins = Poppins({
   subsets: ["latin"],
   variable: "--font-poppins",
 });
-
-export const metadata: Metadata = {
-  title: "PRO Manizales | Plataforma Deportiva para Atletas",
-  description:
-    "PRO Manizales es la plataforma deportiva que conecta atletas, organiza eventos y potencia el deporte en Manizales. Únete a la comunidad deportiva más grande de la ciudad.",
-};
+const barlowCondensed = Barlow_Condensed({
+  weight: ["500", "600", "700", "800"],
+  subsets: ["latin"],
+  variable: "--font-display",
+});
 
 export default function RootLayout({
   children,
@@ -25,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="es" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${poppins.variable} font-sans antialiased`}
+        className={`${inter.variable} ${poppins.variable} ${barlowCondensed.variable} font-sans antialiased`}
       >
         <ThemeProvider
           attribute="class"
@@ -40,5 +40,3 @@ export default function RootLayout({
     </html>
   );
 }
-
-import "./globals.css";

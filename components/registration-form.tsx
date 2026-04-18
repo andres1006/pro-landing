@@ -307,7 +307,12 @@ export function RegistrationForm() {
                   <div className="flex items-start space-x-3 pt-2">
                     <Checkbox
                       id="terms"
-                      {...register("acceptTerms")}
+                      checked={acceptTerms ?? false}
+                      onCheckedChange={(checked) =>
+                        setValue("acceptTerms", checked === true, {
+                          shouldValidate: true,
+                        })
+                      }
                       className="border-gray-400 dark:border-white data-[state=checked]:bg-[#64ffda] data-[state=checked]:border-[#64ffda]"
                     />
                     <div className="grid gap-1.5 leading-none">

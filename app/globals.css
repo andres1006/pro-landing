@@ -58,10 +58,7 @@
     font-family: var(--font-inter);
   }
   h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-montserrat);
-  }
-  button, a {
-    font-family: var(--font-raleway);
+    font-family: var(--font-display), var(--font-poppins), var(--font-inter), sans-serif;
   }
 }
 
