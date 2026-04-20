@@ -12,7 +12,7 @@ export function CountdownBanner() {
     seconds: 0,
   });
 
-  const targetDate = new Date("April 14, 2025 00:00:00").getTime();
+  const targetDate = new Date("May 1, 2026 00:00:00").getTime();
 
   useEffect(() => {
     const calculateTimeLeft = () => {
