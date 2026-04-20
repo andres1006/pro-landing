@@ -21,37 +21,69 @@ export function ChallengeSection() {
   useEffect(() => {
     if (!sectionRef.current) return;
 
+    // Entrada del fondo: fade-in cuando la sección entra al viewport (no scrub).
+    // Se resuelve una sola vez, evita que la imagen "aparezca de la nada" al final del timeline.
+    gsap.fromTo(
+      ".challenge-image",
+      { opacity: 0, x: 60, scale: 1.05 },
+      {
+        opacity: 0.9,
+        x: 0,
+        scale: 1,
+        duration: 1.1,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 85%",
+          toggleActions: "play none none reverse",
+        },
+      }
+    );
+
+    // Parallax vertical suave del fondo, atado al scroll de la sección.
+    gsap.to(".challenge-image", {
+      yPercent: -8,
+      ease: "none",
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top bottom",
+        end: "bottom top",
+        scrub: 0.8,
+      },
+    });
+
+    // Entrada del texto + iconos en cascada (no scrub).
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: sectionRef.current,
-        start: "top 100%",
-        end: "bottom 100%",
-        scrub: 1,
+        start: "top 80%",
+        toggleActions: "play none none reverse",
       },
     });
 
     tl.fromTo(
       ".challenge-title",
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 0.5 }
+      { opacity: 0, y: 24 },
+      { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }
     )
       .fromTo(
         ".challenge-text",
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 0.5 },
-        "-=0.3"
+        { opacity: 0, y: 24 },
+        { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" },
+        "-=0.4"
       )
       .fromTo(
         ".challenge-icon",
-        { opacity: 0, scale: 0.8 },
-        { opacity: 1, scale: 1, stagger: 0.2, duration: 0.5 },
-        "-=0.4"
-      )
-      .fromTo(
-        ".challenge-image",
-        { opacity: 0, x: 50 },
-        { opacity: theme === "dark" ? 0.9 : 0.9, x: 0, duration: 0.1 },
-        "-=0.4"
+        { opacity: 0, y: 16, scale: 0.92 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          stagger: 0.15,
+          duration: 0.5,
+          ease: "power2.out",
+        },
+        "-=0.3"
       );
 
     return () => {
@@ -96,10 +128,11 @@ export function ChallengeSection() {
       const moveY = clientY / window.innerHeight - 0.5;
 
       gsap.to(".challenge-image", {
-        x: moveX * 20,
-        y: moveY * 20,
-        duration: 1,
+        x: moveX * 8,
+        y: moveY * 8,
+        duration: 1.2,
         ease: "power2.out",
+        overwrite: "auto",
       });
     };
 

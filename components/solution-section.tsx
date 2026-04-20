@@ -19,32 +19,55 @@ export function SolutionSection() {
   useEffect(() => {
     if (!sectionRef.current) return;
 
+    // Entrada del fondo: fade-in al entrar al viewport (no scrub) para evitar aparición abrupta.
+    gsap.fromTo(
+      ".solution-image",
+      { opacity: 0, x: -60, scale: 1.05 },
+      {
+        opacity: 0.9,
+        x: 0,
+        scale: 1,
+        duration: 1.1,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 85%",
+          toggleActions: "play none none reverse",
+        },
+      }
+    );
+
+    // Parallax vertical suave atado al scroll.
+    gsap.to(".solution-image", {
+      yPercent: -8,
+      ease: "none",
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top bottom",
+        end: "bottom top",
+        scrub: 0.8,
+      },
+    });
+
+    // Entrada del texto en cascada.
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: sectionRef.current,
-        start: "top 100%",
-        end: "bottom 100%",
-        scrub: 1,
+        start: "top 80%",
+        toggleActions: "play none none reverse",
       },
     });
 
     tl.fromTo(
       ".solution-title",
-      { opacity: 0, y: 50 },
-      { opacity: 1, y: 0, duration: 0.5 }
-    )
-      .fromTo(
-        ".solution-text",
-        { opacity: 0, y: 50 },
-        { opacity: 1, y: 0, duration: 0.5 },
-        "-=0.3"
-      )
-      .fromTo(
-        ".solution-image",
-        { opacity: 0, x: 90 },
-        { opacity: theme === "dark" ? 0.9 : 0.9, x: 0, duration: 0.15 },
-        "-=0.4"
-      );
+      { opacity: 0, y: 32 },
+      { opacity: 1, y: 0, duration: 0.7, ease: "power2.out" }
+    ).fromTo(
+      ".solution-text",
+      { opacity: 0, y: 24 },
+      { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" },
+      "-=0.4"
+    );
 
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
@@ -61,10 +84,11 @@ export function SolutionSection() {
       const moveY = clientY / window.innerHeight - 0.5;
 
       gsap.to(".solution-image", {
-        x: moveX * 20,
-        y: moveY * 20,
-        duration: 1,
+        x: moveX * 8,
+        y: moveY * 8,
+        duration: 1.2,
         ease: "power2.out",
+        overwrite: "auto",
       });
     };
 
