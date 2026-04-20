@@ -125,9 +125,10 @@ export function ChallengeSection() {
       >
         <div className="relative h-full">
           <Image
-            src="/assets/male-soccer-player-with-ball-grass-field.jpg"
+            src="/assets/male-soccer.webp"
             alt="Jugador de fútbol en Manizales"
             fill
+            sizes="(min-width: 1024px) 50vw, 100vw"
             className="object-cover object-center"
           />
           <div className="absolute inset-0 bg-gradient-to-l from-transparent to-background"></div>

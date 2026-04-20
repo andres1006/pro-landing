@@ -10,8 +10,8 @@ gsap.registerPlugin(ScrollTrigger);
 
 // Deportes principales de Manizales
 const sports = [
-  { name: "", image: "/assets/img-1.png" },
-  { name: "", image: "/assets/img-3.jpeg" },
+  { name: "", image: "/assets/img-1.webp" },
+  { name: "", image: "/assets/img-3.webp" },
 ];
 
 export function LocalFocusSection() {
