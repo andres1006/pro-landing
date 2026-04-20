@@ -10,8 +10,8 @@ gsap.registerPlugin(ScrollTrigger);
 
 // Deportes principales de Manizales
 const sports = [
-  { name: "", image: "/assets/img-1.png" },
-  { name: "", image: "/assets/img-3.jpeg" },
+  { name: "", image: "/assets/img-1.webp" },
+  { name: "", image: "/assets/img-3.webp" },
 ];
 
 export function LocalFocusSection() {
@@ -22,50 +22,50 @@ export function LocalFocusSection() {
   useEffect(() => {
     if (!sectionRef.current) return;
 
-    /*     const tl = gsap.timeline({
+    const tl = gsap.timeline({
       scrollTrigger: {
         trigger: sectionRef.current,
-        start: "top 50%",
-        end: "center center",
+        start: "top 80%",
+        end: "center 60%",
         scrub: 1,
       },
     });
- */
-    /*    tl.fromTo(
+
+    tl.fromTo(
       ".local-title",
-      { opacity: 0, y: 50 },
+      { opacity: 0, y: 40 },
       { opacity: 1, y: 0, duration: 0.8 }
     )
       .fromTo(
         ".local-text",
         { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 0.6 },
-        "-=0.6"
+        { opacity: 1, y: 0, duration: 0.8 },
+        "-=0.5"
       )
       .fromTo(
         ".city-map",
-        { opacity: 0, scale: 0.9 },
+        { opacity: 0, scale: 0.92 },
         { opacity: 1, scale: 1, duration: 0.8 },
-        "-=0.4"
-      ); */
+        "-=0.6"
+      );
 
-    // Animación para los iconos de deportes
-    /*     gsap.fromTo(
+    gsap.fromTo(
       ".sport-icon",
-      { opacity: 0, y: 20 },
+      { opacity: 0, y: 30, scale: 0.95 },
       {
         opacity: 1,
         y: 0,
-        stagger: 0.2,
-        duration: 0.5,
+        scale: 1,
+        stagger: 0.15,
+        duration: 0.6,
         scrollTrigger: {
           trigger: ".sports-container",
-          start: "top 80%",
+          start: "top 85%",
           end: "bottom 60%",
           scrub: 1,
         },
       }
-    ); */
+    );
 
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());

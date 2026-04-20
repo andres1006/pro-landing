@@ -21,7 +21,7 @@ export const metadata: Metadata = {
         description: "PRO Manizales es la plataforma deportiva que conecta atletas, organiza eventos y potencia el deporte en Manizales. Únete a la comunidad deportiva más grande de la ciudad.",
         images: [
             {
-                url: "/assets/sportsman-sitting-grass-holding-football-dusk.jpg",
+                url: "/assets/sportsman-og.jpg",
                 width: 1200,
                 height: 630,
                 alt: "Deportista en Manizales al atardecer",
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
         card: "summary_large_image",
         title: "PRO Manizales | Plataforma Deportiva para Atletas",
         description: "PRO Manizales es la plataforma deportiva que conecta atletas, organiza eventos y potencia el deporte en Manizales.",
-        images: ["/assets/sportsman-sitting-grass-holding-football-dusk.jpg"],
+        images: ["/assets/sportsman-og.jpg"],
         creator: "@promanizales",
     },
     robots: {

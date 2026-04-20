@@ -85,10 +85,11 @@ export function HeroSection() {
           muted
           loop
           playsInline
-          preload="auto"
+          preload="metadata"
+          poster="/assets/hero-poster.webp"
           className="h-full w-full object-cover"
         >
-          <source src="/assets/hero-3.mp4" type="video/mp4" />
+          <source src="/assets/hero.mp4" type="video/mp4" />
           Tu navegador no soporta videos HTML5.
         </video>
         {/* Overlay para mejorar la visibilidad del contenido */}

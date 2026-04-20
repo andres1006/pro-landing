@@ -90,9 +90,10 @@ export function SolutionSection() {
       >
         <div className="relative h-full">
           <Image
-            src="/assets/sportsman-sitting-grass-holding-football-dusk.jpg"
+            src="/assets/sportsman.webp"
             alt="Deportista en Manizales al atardecer"
             fill
+            sizes="(min-width: 1024px) 50vw, 100vw"
             className="object-cover object-center"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-transparent to-background"></div>
