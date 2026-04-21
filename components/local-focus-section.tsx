@@ -8,7 +8,6 @@ import Image from "next/image";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Deportes principales de Manizales
 const sports = [
   { name: "", image: "/assets/img-1.webp" },
   { name: "", image: "/assets/img-3.webp" },
@@ -16,9 +15,7 @@ const sports = [
 
 export function LocalFocusSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const mapRef = useRef<HTMLDivElement>(null);
 
-  // Configuración de animaciones ScrollTrigger
   useEffect(() => {
     if (!sectionRef.current) return;
 
@@ -26,43 +23,58 @@ export function LocalFocusSection() {
       scrollTrigger: {
         trigger: sectionRef.current,
         start: "top 80%",
-        end: "center 60%",
-        scrub: 1,
+        toggleActions: "play none none reverse",
       },
     });
 
     tl.fromTo(
-      ".local-title",
-      { opacity: 0, y: 40 },
-      { opacity: 1, y: 0, duration: 0.8 }
+      ".local-eyebrow",
+      { opacity: 0, y: 16 },
+      { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }
     )
       .fromTo(
-        ".local-text",
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 0.8 },
-        "-=0.5"
+        ".local-title",
+        { opacity: 0, y: 28 },
+        { opacity: 1, y: 0, duration: 0.7, ease: "power2.out" },
+        "-=0.3"
       )
       .fromTo(
-        ".city-map",
-        { opacity: 0, scale: 0.92 },
-        { opacity: 1, scale: 1, duration: 0.8 },
-        "-=0.6"
+        ".local-text",
+        { opacity: 0, y: 24 },
+        { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" },
+        "-=0.4"
       );
 
     gsap.fromTo(
       ".sport-icon",
-      { opacity: 0, y: 30, scale: 0.95 },
+      { opacity: 0, y: 24, scale: 0.96 },
       {
         opacity: 1,
         y: 0,
         scale: 1,
         stagger: 0.15,
         duration: 0.6,
+        ease: "power2.out",
         scrollTrigger: {
           trigger: ".sports-container",
           start: "top 85%",
-          end: "bottom 60%",
-          scrub: 1,
+          toggleActions: "play none none reverse",
+        },
+      }
+    );
+
+    gsap.fromTo(
+      ".city-map",
+      { opacity: 0, scale: 0.94 },
+      {
+        opacity: 1,
+        scale: 1,
+        duration: 0.9,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: ".city-map",
+          start: "top 85%",
+          toggleActions: "play none none reverse",
         },
       }
     );
@@ -72,137 +84,82 @@ export function LocalFocusSection() {
     };
   }, []);
 
-  // Efecto de hover para el mapa
-  useEffect(() => {
-    if (!mapRef.current) return;
-
-    const handleMouseMove = (e: MouseEvent) => {
-      const map = mapRef.current;
-      if (!map) return;
-
-      const { left, top, width, height } = map.getBoundingClientRect();
-      const x = (e.clientX - left) / width - 0.5;
-      const y = (e.clientY - top) / height - 0.5;
-
-      // Efecto parallax para los elementos del mapa
-      /*       gsap.to(".map-element", {
-        x: x * 20,
-        y: y * 20,
-        duration: 1,
-        ease: "power2.out",
-      });
-
-      // Rotación sutil del mapa
-      gsap.to(".city-map", {
-        rotationY: x * 5,
-        rotationX: -y * 5,
-        duration: 1,
-        ease: "power2.out",
-      }); */
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
-
   return (
     <section
       ref={sectionRef}
-      className="py-16 sm:py-24 md:py-32 bg-gradient-to-b from-background/90 to-background/100 relative overflow-hidden"
+      className="relative w-full py-24 md:py-32 overflow-hidden"
     >
-      {/* Elementos decorativos de fondo */}
+      {/* Glows sutiles */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-1/4 left-1/3 w-48 sm:w-64 h-48 sm:h-64 bg-[#64ffda]/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-1/3 right-1/4 w-72 sm:w-96 h-72 sm:h-96 bg-[#b794f4]/10 rounded-full blur-3xl"></div>
+        <div className="absolute top-1/4 left-1/3 w-64 h-64 bg-accent/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-primary/10 rounded-full blur-3xl"></div>
       </div>
 
-      <div className="container mx-auto px-4 sm:px-6">
-        <div className="flex flex-col lg:flex-row items-center gap-8 sm:gap-16">
+      <div className="relative z-10 container mx-auto px-6">
+        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
           {/* Sección de texto */}
           <div className="w-full lg:w-1/2 order-2 lg:order-1">
-            <h2 className="local-title text-3xl sm:text-4xl md:text-5xl font-bold mb-6 sm:mb-8 text-black dark:text-white font-heading">
-              Pensado para deportistas apasionados
+            <span className="local-eyebrow inline-block text-xs md:text-sm font-display tracking-[0.3em] uppercase text-accent mb-5">
+              Hecho en Manizales
+            </span>
+            <h2 className="local-title text-3xl sm:text-4xl md:text-5xl font-bold mb-6 text-foreground font-display uppercase tracking-tight">
+              Para deportistas{" "}
+              <span className="text-logo-gradient">apasionados</span>
             </h2>
 
-            <p className="local-text text-lg sm:text-xl text-black dark:text-white leading-relaxed mb-6 sm:mb-8">
-              <span className="font-bold">PRO</span> nace del corazón y la
-              pasión por el deporte en nuestra ciudad. Creemos que cada gota de
-              sudor, cada minuto de entrenamiento y cada sueño deportivo merece
-              brillar. Estamos aquí para conectar almas apasionadas, celebrar
-              victorias personales y construir una comunidad donde el espíritu
-              deportivo trascienda más allá de las canchas. ¡Porque tu pasión
-              deportiva merece una plataforma a su altura!
+            <p className="local-text text-lg text-muted-foreground leading-relaxed mb-8">
+              <span className="font-bold text-foreground">PRO</span> nace del corazón
+              deportivo de nuestra ciudad. Conectamos almas apasionadas, celebramos
+              victorias personales y construimos la comunidad que el deporte
+              aficionado de Manizales se merece.
             </p>
 
             {/* Grid de deportes con imágenes */}
-            <div className="sports-container grid grid-cols-2 sm:grid-cols-2 gap-4 mt-8 sm:mt-10">
+            <div className="sports-container grid grid-cols-2 gap-4">
               {sports.map((sport, index) => (
                 <motion.div
                   key={index}
-                  className="sport-icon group relative overflow-hidden rounded-xl"
+                  className="sport-icon group relative overflow-hidden rounded-xl border border-border/60"
                   whileHover={{ scale: 1.02 }}
                 >
                   <div className="relative aspect-[4/3]">
                     <Image
                       src={sport.image}
-                      alt={sport.name}
+                      alt={sport.name || "Deporte en Manizales"}
                       fill
-                      className="object-cover transition-transform duration-300 group-hover:scale-110"
+                      sizes="(min-width: 1024px) 25vw, 50vw"
+                      className="object-cover transition-transform duration-500 group-hover:scale-110"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                    <div className="absolute bottom-0 left-0 right-0 p-4">
-                      <span className="text-white font-medium text-sm sm:text-base">
-                        {sport.name}
-                      </span>
-                    </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent"></div>
                   </div>
                 </motion.div>
               ))}
             </div>
           </div>
 
-          {/* Mapa estilizado de Manizales */}
-          <div ref={mapRef} className="w-full lg:w-1/2 order-1 lg:order-2">
-            <div className="city-map relative aspect-square max-w-sm sm:max-w-lg mx-auto perspective-1000 transform-gpu">
-              {/* Fondo del mapa */}
-              <div className="relative w-full h-full rounded-xl sm:rounded-2xl overflow-hidden shadow-[0_0_30px_rgba(0,0,0,0.2)] border border-white/10">
-                <div className="absolute inset-0">
-                  <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3974.288150474109!2d-75.49168783772532!3d5.056967311029084!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e47657c8b8223b9%3A0x6b14d6b82cf52c2a!2sEstadio%20Palogrande!5e0!3m2!1ses!2sco!4v1743211158315!5m2!1ses!2sco"
-                    width="100%"
-                    height="100%"
-                    style={{ border: 0 }}
-                    allowFullScreen
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                  ></iframe>
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-br from-background via-[#64ffda]/10 to-[#b794f4]/10"></div>
-
-                {/* Contenido del mapa */}
-                <div className="absolute inset-0 p-4 sm:p-8 flex items-center justify-center">
-                  {/* Silueta de Manizales */}
-                  <div className="w-3/4 h-3/4 relative">
-                    <div className="absolute inset-0 border-2 sm:border-4 border-white/20 rounded-full"></div>
-
-                    {/* Puntos de interés en el mapa */}
-                    <div className="map-element absolute top-1/3 left-1/2 w-3 h-3 sm:w-4 sm:h-4 bg-[#64ffda] rounded-full shadow-[0_0_10px_rgba(100,255,218,0.8)]"></div>
-                    <div className="map-element absolute top-2/3 right-1/3 w-3 h-3 sm:w-4 sm:h-4 bg-[#b794f4] rounded-full shadow-[0_0_10px_rgba(183,148,244,0.8)]"></div>
-                    <div className="map-element absolute bottom-1/4 left-1/2 w-3 h-3 sm:w-4 sm:h-4 bg-[#64ffda] rounded-full shadow-[0_0_10px_rgba(100,255,218,0.8)]"></div>
-
-                    {/* Etiquetas */}
-                    <div className="map-element absolute top-1/3 left-1/2 -translate-y-6 sm:-translate-y-8 text-[10px] sm:text-xs bg-white/50 dark:bg-black/50 backdrop-blur-sm px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-md">
-                      Estadio
-                    </div>
-                    <div className="map-element absolute top-2/3 right-1/3 translate-x-4 sm:translate-x-6 text-[10px] sm:text-xs bg-white/50 dark:bg-black/50 backdrop-blur-sm px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-md">
-                      Baloncesto
-                    </div>
-                  </div>
-                </div>
+          {/* Mapa */}
+          <div className="w-full lg:w-1/2 order-1 lg:order-2">
+            <div className="city-map relative aspect-square max-w-lg mx-auto">
+              <div className="relative w-full h-full rounded-2xl overflow-hidden border border-border/60 shadow-[0_20px_60px_-15px_rgba(107,56,182,0.35)]">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3974.288150474109!2d-75.49168783772532!3d5.056967311029084!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e47657c8b8223b9%3A0x6b14d6b82cf52c2a!2sEstadio%20Palogrande!5e0!3m2!1ses!2sco!4v1743211158315!5m2!1ses!2sco"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0, filter: "grayscale(0.6) contrast(1.05) brightness(0.85)" }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Mapa de Manizales"
+                ></iframe>
+                {/* Overlay con tinte de la paleta */}
+                <div className="absolute inset-0 pointer-events-none bg-gradient-to-br from-primary/20 via-transparent to-accent/20 mix-blend-overlay"></div>
+                <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-background/40 via-transparent to-transparent"></div>
               </div>
 
-              {/* Efectos de overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-20 rounded-xl sm:rounded-2xl pointer-events-none"></div>
+              {/* Badge "Manizales" flotante */}
+              <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-card/90 backdrop-blur-md border border-border rounded-full px-5 py-2 text-sm font-display uppercase tracking-[0.25em] text-foreground shadow-lg">
+                Manizales · Caldas
+              </div>
             </div>
           </div>
         </div>

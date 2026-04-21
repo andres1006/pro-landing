@@ -3,49 +3,60 @@
 @tailwind utilities;
 
 @layer base {
+  /*
+   * Paleta PRO Manizales — extraída del logo (teal → azul → morado).
+   * El landing vive en dark como base; el modo claro queda disponible pero
+   * mapeado a los mismos tokens oscuros para evitar "bandas blancas" si el
+   * ThemeProvider arranca en "system" con un OS en light.
+   */
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
-    --primary: 0 72.2% 50.6%;
-    --primary-foreground: 0 85.7% 97.3%;
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 9%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 0 72.2% 50.6%;
-    --radius: 0.5rem;
+    /* Base oscura */
+    --background: 230 28% 5%;       /* #07080B aprox */
+    --foreground: 0 0% 98%;
+    --card: 230 24% 9%;             /* superficie ligeramente más alta */
+    --card-foreground: 0 0% 98%;
+    --popover: 230 24% 9%;
+    --popover-foreground: 0 0% 98%;
+
+    /* Paleta del logo */
+    --primary: 268 54% 47%;         /* #6B38B6 morado */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 204 53% 49%;       /* #388DC1 azul */
+    --secondary-foreground: 0 0% 100%;
+    --accent: 188 71% 46%;          /* #22B2C9 teal */
+    --accent-foreground: 0 0% 100%;
+
+    /* Neutrales */
+    --muted: 230 18% 14%;
+    --muted-foreground: 230 10% 70%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 230 18% 18%;
+    --input: 230 18% 14%;
+    --ring: 268 54% 47%;
+    --radius: 0.75rem;
   }
 
   .dark {
-    --background: 0 0% 3.9%;
+    --background: 230 28% 5%;
     --foreground: 0 0% 98%;
-    --card: 0 0% 3.9%;
+    --card: 230 24% 9%;
     --card-foreground: 0 0% 98%;
-    --popover: 0 0% 3.9%;
+    --popover: 230 24% 9%;
     --popover-foreground: 0 0% 98%;
-    --primary: 0 72.2% 50.6%;
-    --primary-foreground: 0 85.7% 97.3%;
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 72.2% 50.6%;
+    --primary: 268 54% 47%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 204 53% 49%;
+    --secondary-foreground: 0 0% 100%;
+    --accent: 188 71% 46%;
+    --accent-foreground: 0 0% 100%;
+    --muted: 230 18% 14%;
+    --muted-foreground: 230 10% 70%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 230 18% 18%;
+    --input: 230 18% 14%;
+    --ring: 268 54% 47%;
   }
 }
 
@@ -53,12 +64,46 @@
   * {
     @apply border-border;
   }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-inter);
+    position: relative;
+    min-height: 100vh;
+    overflow-x: hidden;
   }
+
+  /*
+   * Backdrop global cohesivo: un único lienzo oscuro que se ve por debajo de
+   * todas las secciones transparentes. Evita las bandas blancas y da la
+   * sensación de "una pieza" entre bloques. Radial glows morado + teal muy
+   * suaves para marcar profundidad sin distraer.
+   */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(1000px 700px at 10% -10%, hsl(268 54% 47% / 0.18), transparent 60%),
+      radial-gradient(900px 600px at 110% 20%, hsl(204 53% 49% / 0.14), transparent 60%),
+      radial-gradient(1200px 800px at 50% 120%, hsl(188 71% 46% / 0.12), transparent 60%),
+      hsl(var(--background));
+    pointer-events: none;
+  }
+
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-display), var(--font-poppins), var(--font-inter), sans-serif;
+    letter-spacing: -0.01em;
+  }
+
+  ::selection {
+    background: hsl(var(--primary) / 0.35);
+    color: hsl(var(--foreground));
   }
 }
 
@@ -67,29 +112,51 @@
     background-image: radial-gradient(var(--tw-gradient-stops));
   }
 
-  .animation-delay-1000 {
-    animation-delay: 1s;
+  /* Divider sutil entre secciones — 1px con fade a los costados */
+  .section-divider {
+    height: 1px;
+    width: 100%;
+    background: linear-gradient(
+      to right,
+      transparent,
+      hsl(var(--primary) / 0.35),
+      hsl(var(--accent) / 0.35),
+      transparent
+    );
   }
 
-  .animation-delay-2000 {
-    animation-delay: 2s;
+  /* Gradiente del logo reutilizable */
+  .bg-logo-gradient {
+    background: linear-gradient(
+      135deg,
+      #22B2C9 0%,
+      #388DC1 35%,
+      #4864BA 55%,
+      #6B38B6 80%,
+      #7A2BB5 100%
+    );
   }
 
-  .animation-delay-3000 {
-    animation-delay: 3s;
+  .text-logo-gradient {
+    background: linear-gradient(
+      135deg,
+      #22B2C9 0%,
+      #4864BA 50%,
+      #7A2BB5 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
 
-  .animation-delay-4000 {
-    animation-delay: 4s;
-  }
+  .animation-delay-1000 { animation-delay: 1s; }
+  .animation-delay-2000 { animation-delay: 2s; }
+  .animation-delay-3000 { animation-delay: 3s; }
+  .animation-delay-4000 { animation-delay: 4s; }
 
   @keyframes float {
-    0%, 100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-20px);
-    }
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
   }
 
   .animate-float {
@@ -97,12 +164,8 @@
   }
 
   @keyframes pulse-slow {
-    0%, 100% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0.5;
-    }
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
   }
 
   .animate-pulse-slow {
@@ -134,59 +197,26 @@
   }
 
   @keyframes slideUp {
-    0% { 
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    100% { 
-      opacity: 1;
-      transform: translateY(0);
-    }
+    0% { opacity: 0; transform: translateY(30px); }
+    100% { opacity: 1; transform: translateY(0); }
   }
 
   .animate-slideUp {
     animation: slideUp 1s ease-out forwards;
   }
 
-  @keyframes pulse {
-    0%, 100% {
-      opacity: 1;
-      transform: scale(1);
-    }
-    50% {
-      opacity: 0.85;
-      transform: scale(1.05);
-    }
-  }
-
-  .animate-pulse-slow {
-    animation: pulse 3s ease-in-out infinite;
+  @keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
   }
 
   .animate-rotate {
     animation: rotate 10s linear infinite;
   }
-
-  @keyframes rotate {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
 }
 
-/* Estilos personalizados para el modo oscuro */
-.dark .hero-overlay {
-  @apply bg-black/50;
-}
-
-.dark .floating-element {
-  @apply bg-white/5;
-}
-
-.dark .countdown-number {
-  @apply bg-white/10;
-}
-
-.dark .map-element {
-  @apply bg-white/10;
-}
-
+/* Ajustes puntuales para modo oscuro (opacidades del hero, etc) */
+.dark .hero-overlay { @apply bg-black/50; }
+.dark .floating-element { @apply bg-white/5; }
+.dark .countdown-number { @apply bg-white/10; }
+.dark .map-element { @apply bg-white/10; }

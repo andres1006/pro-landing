@@ -3,12 +3,10 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { motion } from "framer-motion";
 import { Calendar, Activity, Map } from "lucide-react";
 import Image from "next/image";
 import { useTheme } from "@/components/theme-provider";
 
-// Registramos el plugin de ScrollTrigger
 gsap.registerPlugin(ScrollTrigger);
 
 export function ChallengeSection() {
@@ -17,41 +15,76 @@ export function ChallengeSection() {
   const iconsRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
 
-  // Animación al hacer scroll
   useEffect(() => {
     if (!sectionRef.current) return;
 
+    // Entrada del fondo: fade-in cuando la sección entra al viewport (no scrub).
+    gsap.fromTo(
+      ".challenge-image",
+      { opacity: 0, scale: 1.08 },
+      {
+        opacity: 1,
+        scale: 1,
+        duration: 1.2,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 85%",
+          toggleActions: "play none none reverse",
+        },
+      }
+    );
+
+    // Parallax vertical suave atado al scroll de la sección.
+    gsap.to(".challenge-image", {
+      yPercent: -6,
+      ease: "none",
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top bottom",
+        end: "bottom top",
+        scrub: 0.8,
+      },
+    });
+
+    // Entrada del texto + iconos en cascada (no scrub).
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: sectionRef.current,
-        start: "top 100%",
-        end: "bottom 100%",
-        scrub: 1,
+        start: "top 80%",
+        toggleActions: "play none none reverse",
       },
     });
 
     tl.fromTo(
-      ".challenge-title",
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 0.5 }
+      ".challenge-eyebrow",
+      { opacity: 0, y: 16 },
+      { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }
     )
       .fromTo(
-        ".challenge-text",
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 0.5 },
+        ".challenge-title",
+        { opacity: 0, y: 24 },
+        { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" },
         "-=0.3"
       )
       .fromTo(
-        ".challenge-icon",
-        { opacity: 0, scale: 0.8 },
-        { opacity: 1, scale: 1, stagger: 0.2, duration: 0.5 },
+        ".challenge-text",
+        { opacity: 0, y: 24 },
+        { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" },
         "-=0.4"
       )
       .fromTo(
-        ".challenge-image",
-        { opacity: 0, x: 50 },
-        { opacity: theme === "dark" ? 0.9 : 0.9, x: 0, duration: 0.1 },
-        "-=0.4"
+        ".challenge-icon",
+        { opacity: 0, y: 20, scale: 0.94 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          stagger: 0.12,
+          duration: 0.5,
+          ease: "power2.out",
+        },
+        "-=0.3"
       );
 
     return () => {
@@ -59,154 +92,106 @@ export function ChallengeSection() {
     };
   }, [theme]);
 
-  // Animación al mover el mouse sobre los iconos
   useEffect(() => {
     if (!iconsRef.current) return;
-
     const icons = iconsRef.current.querySelectorAll(".challenge-icon");
 
     icons.forEach((icon) => {
-      icon.addEventListener("mouseenter", () => {
-        gsap.to(icon, {
-          y: -5,
-          scale: 1.1,
-          duration: 0.3,
-          ease: "power2.out",
-        });
-      });
-
-      icon.addEventListener("mouseleave", () => {
-        gsap.to(icon, {
-          y: 0,
-          scale: 1,
-          duration: 0.3,
-          ease: "power2.out",
-        });
-      });
+      const onEnter = () =>
+        gsap.to(icon, { y: -6, scale: 1.05, duration: 0.3, ease: "power2.out" });
+      const onLeave = () =>
+        gsap.to(icon, { y: 0, scale: 1, duration: 0.3, ease: "power2.out" });
+      icon.addEventListener("mouseenter", onEnter);
+      icon.addEventListener("mouseleave", onLeave);
     });
-  }, []);
-
-  // Animación para la imagen de fondo
-  useEffect(() => {
-    if (!imageRef.current) return;
-
-    const handleMouseMove = (e: MouseEvent) => {
-      const { clientX, clientY } = e;
-      const moveX = clientX / window.innerWidth - 0.5;
-      const moveY = clientY / window.innerHeight - 0.5;
-
-      gsap.to(".challenge-image", {
-        x: moveX * 20,
-        y: moveY * 20,
-        duration: 1,
-        ease: "power2.out",
-      });
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
   return (
     <section
       ref={sectionRef}
-      className="py-20 md:py-32 bg-gradient-to-b from-background to-background/50 relative overflow-hidden challenge-section"
+      className="relative w-full py-24 md:py-36 overflow-hidden challenge-section"
     >
-      {/* Elementos decorativos de fondo */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute -top-20 -left-20 w-64 h-64 bg-primary/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-10 right-10 w-80 h-80 bg-accent/10 rounded-full blur-3xl"></div>
-      </div>
-
-      {/* Imagen de fondo */}
+      {/* Imagen de fondo full-bleed con overlay cinemático */}
       <div
         ref={imageRef}
-        className="challenge-image absolute right-0 top-1/2 transform -translate-y-1/2 w-1/2 h-full hidden lg:block"
+        className="challenge-image absolute inset-0 pointer-events-none"
       >
-        <div className="relative h-full">
-          <Image
-            src="/assets/male-soccer.webp"
-            alt="Jugador de fútbol en Manizales"
-            fill
-            sizes="(min-width: 1024px) 50vw, 100vw"
-            className="object-cover object-center"
-          />
-          <div className="absolute inset-0 bg-gradient-to-l from-transparent to-background"></div>
-        </div>
+        <Image
+          src="/assets/male-soccer.webp"
+          alt="Jugador de fútbol en Manizales"
+          fill
+          sizes="100vw"
+          className="object-cover object-center opacity-40 md:opacity-50"
+          priority={false}
+        />
+        {/* Vignette oscuro para legibilidad y respirar con el backdrop global */}
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-background/70 to-background"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/40 to-background/90"></div>
       </div>
 
-      <div className="container mx-auto px-6">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="challenge-title text-4xl md:text-5xl font-bold mb-8 font-heading">
-            Tu pasión merece más ¿verdad?
+      {/* Glows morado/teal muy sutiles para marcar profundidad */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute -top-20 -left-20 w-72 h-72 bg-primary/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl"></div>
+      </div>
+
+      <div className="relative z-10 container mx-auto px-6">
+        <div className="max-w-3xl mx-auto text-center">
+          <span className="challenge-eyebrow inline-block text-xs md:text-sm font-display tracking-[0.3em] uppercase text-accent mb-5">
+            El problema
+          </span>
+          <h2 className="challenge-title text-4xl md:text-6xl font-bold mb-6 font-display uppercase tracking-tight text-foreground">
+            El deporte en Manizales{" "}
+            <span className="text-logo-gradient">merece más</span>
           </h2>
-
-          <p className="challenge-text text-xl md:text-2xl mb-16">
-            Si te apasiona el deporte, sabrás que organizar tus actividades,
-            encontrar personas con quien practicar o competir, ubicar lugares
-            para entrenar y seguir tu progreso como los atletas de alto nivel
-            puede ser complicado.
-            <br></br>
-            Te falta la plataforma que reúna todo lo que necesitas para tu vida
-            deportiva.
+          <p className="challenge-text text-lg md:text-xl text-muted-foreground leading-relaxed">
+            Organizar partidos por WhatsApp, encontrar canchas disponibles,
+            medir tu progreso... hoy cada cosa vive en una app distinta.
+            Tu pasión se pierde en la fricción.
           </p>
+        </div>
 
-          {/* Iconos animados */}
-          <div
-            ref={iconsRef}
-            className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12"
-          >
-            {/* Icono 1: Calendario caótico */}
-            <div className="challenge-icon flex flex-col items-center">
-              <div className="relative w-24 h-24 mb-6">
-                <div className="absolute inset-0 bg-primary/20 rounded-2xl backdrop-blur-md"></div>
-                <div className="relative h-full flex items-center justify-center">
-                  <Calendar size={64} className="text-primary animate-float" />
-                </div>
-              </div>
-              <h3 className="text-xl font-bold mb-2">
-                ¡Más juego, menos estrés!{" "}
-              </h3>
-              <p className="text-muted-foreground">
-                Encontrar y programar eventos deportivos, nunca fue tan fácil.
-              </p>
+        <div
+          ref={iconsRef}
+          className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-10 mt-16 md:mt-24 max-w-5xl mx-auto"
+        >
+          {/* Card 1 */}
+          <div className="challenge-icon group relative rounded-2xl border border-border/60 bg-card/70 backdrop-blur-md p-7 flex flex-col items-start hover:border-primary/40 transition-colors">
+            <div className="mb-5 inline-flex items-center justify-center w-14 h-14 rounded-xl bg-primary/15 text-primary">
+              <Calendar size={28} />
             </div>
+            <h3 className="text-xl font-bold mb-2 font-display uppercase tracking-wide text-foreground">
+              Organización caótica
+            </h3>
+            <p className="text-muted-foreground leading-relaxed">
+              Encontrar y programar eventos deportivos nunca debería ser tan complicado.
+            </p>
+          </div>
 
-            {/* Icono 2: Gráfico estancado */}
-            <div className="challenge-icon flex flex-col items-center">
-              <div className="relative w-24 h-24 mb-6">
-                <div className="absolute inset-0 bg-accent/20 rounded-2xl backdrop-blur-md"></div>
-                <div className="relative h-full flex items-center justify-center">
-                  <Activity
-                    size={64}
-                    className="text-accent animate-float animation-delay-1000"
-                  />
-                </div>
-              </div>
-              <h3 className="text-xl font-bold mb-2">Progreso Visible</h3>
-              <p className="text-muted-foreground">
-                Transformamos tus logros deportivos en inspiración para seguir
-                creciendo.
-              </p>
+          {/* Card 2 */}
+          <div className="challenge-icon group relative rounded-2xl border border-border/60 bg-card/70 backdrop-blur-md p-7 flex flex-col items-start hover:border-accent/40 transition-colors">
+            <div className="mb-5 inline-flex items-center justify-center w-14 h-14 rounded-xl bg-accent/15 text-accent">
+              <Activity size={28} />
             </div>
+            <h3 className="text-xl font-bold mb-2 font-display uppercase tracking-wide text-foreground">
+              Progreso invisible
+            </h3>
+            <p className="text-muted-foreground leading-relaxed">
+              Tus goles, tus tiempos, tus partidos: todo se pierde sin registro.
+            </p>
+          </div>
 
-            {/* Icono 3: Mapa de Manizales con signos de interrogación */}
-            <div className="challenge-icon flex flex-col items-center">
-              <div className="relative w-24 h-24 mb-6">
-                <div className="absolute inset-0 bg-secondary/20 rounded-2xl backdrop-blur-md"></div>
-                <div className="relative h-full flex items-center justify-center">
-                  <Map
-                    size={64}
-                    className="text-secondary animate-float animation-delay-2000"
-                  />
-                </div>
-              </div>
-              <h3 className="text-xl font-bold mb-2">Retos deportivos</h3>
-              <p className="text-muted-foreground">
-                ¡Vive la emoción de superar desafíos junto a tus amigos y/o
-                equipo!
-              </p>
+          {/* Card 3 */}
+          <div className="challenge-icon group relative rounded-2xl border border-border/60 bg-card/70 backdrop-blur-md p-7 flex flex-col items-start hover:border-secondary/40 transition-colors">
+            <div className="mb-5 inline-flex items-center justify-center w-14 h-14 rounded-xl bg-secondary/15 text-secondary">
+              <Map size={28} />
             </div>
+            <h3 className="text-xl font-bold mb-2 font-display uppercase tracking-wide text-foreground">
+              Retos dispersos
+            </h3>
+            <p className="text-muted-foreground leading-relaxed">
+              Sin comunidad local fuerte, es difícil mantener la motivación alta.
+            </p>
           </div>
         </div>
       </div>

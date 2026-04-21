@@ -94,6 +94,8 @@ export function HeroSection() {
         </video>
         {/* Overlay para mejorar la visibilidad del contenido */}
         <div className="hero-overlay absolute inset-0 bg-gradient-to-b from-black/75 via-black/60 to-black/55 z-10"></div>
+        {/* Fade inferior hacia el backdrop global — elimina el "seam" con la siguiente sección */}
+        <div className="absolute bottom-0 left-0 right-0 h-40 z-10 bg-gradient-to-b from-transparent to-background pointer-events-none"></div>
       </div>
 
       {/* Elementos flotantes (efectos visuales) */}

@@ -9,13 +9,18 @@ import { CountdownBanner } from "@/components/countdown-banner";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-background flex flex-col">
+    <main className="min-h-screen flex flex-col relative">
       <CountdownBanner />
       <HeroSection />
+      <div className="section-divider" aria-hidden="true" />
       <ChallengeSection />
+      <div className="section-divider" aria-hidden="true" />
       <SolutionSection />
+      <div className="section-divider" aria-hidden="true" />
       <FeaturesSection />
+      <div className="section-divider" aria-hidden="true" />
       <LocalFocusSection />
+      <div className="section-divider" aria-hidden="true" />
       <RegistrationForm />
       <Footer />
     </main>

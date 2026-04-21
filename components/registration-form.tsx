@@ -129,7 +129,7 @@ export function RegistrationForm() {
   return (
     <section
       id="registro"
-      className="py-24 md:py-32 bg-gradient-to-b from-background/95 to-background relative overflow-hidden"
+      className="relative w-full py-24 md:py-32 overflow-hidden"
     >
       {/* Confetti en caso de éxito */}
       {showConfetti && windowSize.width > 0 && (
@@ -138,39 +138,40 @@ export function RegistrationForm() {
           height={windowSize.height}
           recycle={false}
           numberOfPieces={500}
-          colors={["#64ffda", "#b794f4", "#b794f4"]}
+          colors={["#22B2C9", "#388DC1", "#6B38B6", "#7A2BB5"]}
         />
       )}
 
-      {/* Elementos decorativos de fondo */}
+      {/* Glows decorativos */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-96 h-96 bg-[#64ffda]/10 rounded-full blur-3xl"></div>
-        <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-[#b794f4]/10 rounded-full blur-3xl"></div>
+        <div className="absolute -top-40 -right-40 w-96 h-96 bg-primary/15 rounded-full blur-3xl"></div>
+        <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-accent/15 rounded-full blur-3xl"></div>
       </div>
 
-      <div className="container mx-auto px-6">
-        <div className="max-w-3xl mx-auto">
+      <div className="relative z-10 container mx-auto px-6">
+        <div className="max-w-2xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.7 }}
             viewport={{ once: true }}
-            className="text-center mb-12"
+            className="text-center mb-10 md:mb-14"
           >
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-black dark:text-white font-heading">
-              ¿ Listo para ser parte de la revolución deportiva en Manizales ?
+            <span className="inline-block text-xs md:text-sm font-display tracking-[0.3em] uppercase text-accent mb-5">
+              Únete a la lista
+            </span>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground font-display uppercase tracking-tight">
+              Sé parte de la{" "}
+              <span className="text-logo-gradient">revolución deportiva</span>
             </h2>
-            <p className="text-xl text-black dark:text-white">
-              Únete AHORA a la lista de espera de PRO. Serás el primero en saber
-              cuándo lanzamos, tendrás acceso anticipado y beneficios exclusivos
-              por ser uno de los pioneros de la revolución deportiva. ¡No te
-              quedes por fuera!
+            <p className="text-lg text-muted-foreground leading-relaxed">
+              Acceso anticipado, beneficios de fundador y ser el primero en saber
+              cuándo lanzamos.
             </p>
           </motion.div>
 
-          <div className="bg-white/5 backdrop-blur-lg rounded-2xl p-8 md:p-10 border border-white/10 shadow-xl relative overflow-hidden">
-            {/* Efecto de brillo en el borde */}
-            <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#64ffda]/30 via-[#b794f4]/30 to-[#64ffda]/30 opacity-20 animate-shimmer bg-[length:200%_100%]"></div>
+          <div className="relative rounded-2xl p-[1px] bg-gradient-to-br from-primary/60 via-secondary/40 to-accent/60">
+            <div className="bg-card/90 backdrop-blur-xl rounded-2xl p-8 md:p-10 relative overflow-hidden">
 
             <AnimatePresence mode="wait">
               {isSuccess ? (
@@ -195,17 +196,15 @@ export function RegistrationForm() {
                     <CheckCircle2 size={80} strokeWidth={1.5} />
                   </motion.div>
 
-                  <h3 className="text-2xl font-bold mb-4 text-black dark:text-white text-center">
+                  <h3 className="text-2xl md:text-3xl font-bold mb-4 text-foreground text-center font-display uppercase tracking-tight">
                     ¡Genial {watchedName ? `, ${watchedName}` : ""}!
                   </h3>
-                  <p className="text-lg text-black dark:text-white mb-8 text-center">
-                    Ya estás en la lista para PRO Manizales. Te avisaremos
-                    pronto.{" "}
+                  <p className="text-lg text-muted-foreground mb-8 text-center">
+                    Ya estás en la lista para PRO Manizales. Te avisaremos pronto.
                   </p>
                   <Button
                     variant="outline"
                     onClick={() => {
-                      // accion para copiar url y compartir url
                       navigator.clipboard.writeText(window.location.href);
                       setCopied(true);
                       setTimeout(() => {
@@ -213,12 +212,12 @@ export function RegistrationForm() {
                         reset();
                       }, 5000);
                     }}
-                    className="z-10 bg-transparent cursor-pointer border-white/20 hover:bg-white/10 text-white transition-all duration-300"
+                    className="z-10 bg-transparent cursor-pointer border-border hover:bg-muted text-foreground transition-all duration-300"
                   >
                     Compartir con tus amigos
                   </Button>
                   {copied && (
-                    <p className="text-sm text-green-500">
+                    <p className="text-sm text-accent mt-3">
                       URL copiada al portapapeles
                     </p>
                   )}
@@ -240,22 +239,19 @@ export function RegistrationForm() {
 
                   {/* Email - Campo obligatorio */}
                   <div className="space-y-2">
-                    <Label
-                      htmlFor="email"
-                      className="text-black dark:text-white font-medium"
-                    >
-                      Tu Correo Electrónico{" "}
-                      <span className="text-red-500">*</span>
+                    <Label htmlFor="email" className="text-foreground font-medium">
+                      Tu correo electrónico{" "}
+                      <span className="text-accent">*</span>
                     </Label>
                     <Input
                       id="email"
                       type="email"
                       placeholder="tucorreo@ejemplo.com"
                       {...register("email")}
-                      className="bg-white/10 border-gray-400 dark:border-white text-black dark:text-white placeholder:text-gray-400 focus:ring-[#64ffda] focus:border-[#64ffda]"
+                      className="bg-muted/60 border-border text-foreground placeholder:text-muted-foreground focus:ring-accent focus:border-accent"
                     />
                     {errors.email && (
-                      <p className="text-red-400 text-sm mt-1">
+                      <p className="text-destructive text-sm mt-1">
                         {errors.email.message}
                       </p>
                     )}
@@ -263,34 +259,28 @@ export function RegistrationForm() {
 
                   {/* Nombre - Campo opcional */}
                   <div className="space-y-2">
-                    <Label
-                      htmlFor="name"
-                      className="text-black dark:text-white font-medium"
-                    >
-                      Tu Nombre{" "}
+                    <Label htmlFor="name" className="text-foreground font-medium">
+                      Tu nombre
                     </Label>
                     <Input
                       id="name"
                       type="text"
                       placeholder="Tu nombre"
                       {...register("name")}
-                      className="bg-white/10 border-gray-400 dark:border-white text-black dark:text-white placeholder:text-gray-400 focus:ring-[#64ffda] focus:border-[#64ffda]"
+                      className="bg-muted/60 border-border text-foreground placeholder:text-muted-foreground focus:ring-accent focus:border-accent"
                     />
                   </div>
 
                   {/* Deporte Principal - Campo opcional */}
                   <div className="space-y-2">
-                    <Label
-                      htmlFor="sport"
-                      className="text-black dark:text-white font-medium"
-                    >
-                      Tu Deporte Principal{" "}
+                    <Label htmlFor="sport" className="text-foreground font-medium">
+                      Tu deporte principal
                     </Label>
                     <Select
                       value={watchedSport}
                       onValueChange={(value) => setValue("sport", value)}
                     >
-                      <SelectTrigger className="bg-white/10 border-white/20 text-black dark:text-white placeholder:text-black dark:placeholder:text-white border-gray-400 dark:border-white">
+                      <SelectTrigger className="bg-muted/60 border-border text-foreground">
                         <SelectValue placeholder="Selecciona un deporte" />
                       </SelectTrigger>
                       <SelectContent>
@@ -313,17 +303,17 @@ export function RegistrationForm() {
                           shouldValidate: true,
                         })
                       }
-                      className="border-gray-400 dark:border-white data-[state=checked]:bg-[#64ffda] data-[state=checked]:border-[#64ffda]"
+                      className="border-border data-[state=checked]:bg-accent data-[state=checked]:border-accent mt-0.5"
                     />
                     <div className="grid gap-1.5 leading-none">
                       <label
                         htmlFor="terms"
-                        className="text-sm font-medium leading-none text-black dark:text-white peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        className="text-sm font-medium leading-none text-muted-foreground peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                       >
                         Acepto recibir comunicaciones sobre PRO.
                       </label>
                       {errors.acceptTerms && (
-                        <p className="text-red-400 text-sm">
+                        <p className="text-destructive text-sm">
                           {errors.acceptTerms.message}
                         </p>
                       )}
@@ -332,24 +322,20 @@ export function RegistrationForm() {
 
                   {/* Botón de envío */}
                   <motion.div
-                    whileHover={{ scale: 1.03 }}
+                    whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     className="pt-2"
                   >
                     <Button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full bg-gradient-to-r from-[#4cbaf0] via-[#8955e4] to-[#4cbaf0] hover:from-[#4cbaf0]/90 hover:via-[#8955e4]/90 hover:to-[#4cbaf0]/90 text-white text-lg py-6 rounded-xl transition-all duration-300 relative overflow-hidden group"
+                      className="w-full bg-logo-gradient text-white text-lg py-6 rounded-xl transition-all duration-300 relative overflow-hidden group hover:brightness-110 font-display uppercase tracking-wide"
                     >
                       <span className="relative z-10">
                         {isSubmitting
                           ? "Registrando..."
-                          : "¡Quiero mi Acceso Anticipado!"}
+                          : "Quiero mi acceso anticipado"}
                       </span>
-
-                      {/* Efecto de hover */}
-                      <span className="absolute inset-0 h-full w-full bg-gradient-to-r from-[#8955e4] via-[#4cbaf0] to-[#8955e4] [mask-image:radial-gradient(circle,transparent_50%,black_100%)] group-hover:[mask-image:radial-gradient(circle,black_50%,transparent_100%)] opacity-0 group-hover:opacity-100 transition-all duration-700"></span>
-
                       {isSubmitting && (
                         <Loader2
                           size={20}
@@ -359,13 +345,13 @@ export function RegistrationForm() {
                     </Button>
                   </motion.div>
 
-                  <p className="text-sm text-center text-gray-400 pt-4">
-                    Invita a tus amigos y compañeros de equipo. ¡Mientras más
-                    seamos, mejor será la comunidad PRO en Manizales!
+                  <p className="text-sm text-center text-muted-foreground pt-2">
+                    Invita a tus amigos. Mientras más seamos, mejor será la comunidad PRO.
                   </p>
                 </motion.form>
               )}
             </AnimatePresence>
+            </div>
           </div>
         </div>
       </div>
