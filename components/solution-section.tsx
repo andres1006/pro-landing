@@ -22,29 +22,60 @@ export function SolutionSection() {
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: sectionRef.current,
-        start: "top 100%",
-        end: "bottom 100%",
-        scrub: 1,
+        start: "top 80%",
+        toggleActions: "play none none reverse",
       },
     });
 
     tl.fromTo(
       ".solution-title",
-      { opacity: 0, y: 50 },
-      { opacity: 1, y: 0, duration: 0.5 }
+      { opacity: 0, y: 40 },
+      { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }
     )
       .fromTo(
         ".solution-text",
-        { opacity: 0, y: 50 },
-        { opacity: 1, y: 0, duration: 0.5 },
-        "-=0.3"
+        { opacity: 0, y: 40 },
+        { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" },
+        "-=0.4"
       )
       .fromTo(
         ".solution-image",
-        { opacity: 0, x: 90 },
-        { opacity: theme === "dark" ? 0.9 : 0.9, x: 0, duration: 0.15 },
-        "-=0.4"
+        { opacity: 0, x: -100 },
+        { opacity: theme === "dark" ? 0.9 : 0.9, x: 0, duration: 1.2, ease: "power2.out" },
+        "-=0.8"
       );
+
+    // Animación de los números de las características
+    gsap.fromTo(
+      ".solution-feature",
+      { opacity: 0, y: 30, scale: 0.9 },
+      {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        stagger: 0.2,
+        duration: 0.6,
+        ease: "back.out(1.5)",
+        scrollTrigger: {
+          trigger: ".solution-features-container",
+          start: "top 85%",
+          toggleActions: "play none none reverse",
+        }
+      }
+    );
+
+    // Animación sutil extra para la imagen ligada al scroll
+    gsap.to(".solution-image img", {
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top bottom",
+        end: "bottom top",
+        scrub: 1,
+      },
+      scale: 1.1,
+      y: 20,
+      ease: "none"
+    });
 
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
@@ -88,15 +119,17 @@ export function SolutionSection() {
         ref={imageRef}
         className="solution-image absolute left-0 top-1/2 transform -translate-y-1/2 w-1/2 h-full hidden lg:block -z-1"
       >
-        <div className="relative h-full">
+        <div className="relative h-full rounded-r-[4rem] overflow-hidden shadow-2xl">
           <Image
             src="/assets/sportsman.webp"
             alt="Deportista en Manizales al atardecer"
             fill
             sizes="(min-width: 1024px) 50vw, 100vw"
-            className="object-cover object-center"
+            className="object-cover object-center transition-transform duration-700 hover:scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent to-background"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-background/60 to-background z-10"></div>
+          {/* Overlay oscuro para mejorar contraste */}
+          <div className="absolute inset-0 bg-black/10 dark:bg-black/30 z-0"></div>
         </div>
       </div>
 
@@ -113,9 +146,9 @@ export function SolutionSection() {
           </p>
 
           {/* Características principales */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12 text-black dark:text-white z-10">
+          <div className="solution-features-container grid grid-cols-1 md:grid-cols-3 gap-8 mt-12 text-black dark:text-white z-10">
             {/* Característica 1 */}
-            <div className="flex flex-col items-center">
+            <div className="solution-feature flex flex-col items-center">
               <div className="relative w-24 h-24 mb-6">
                 <div className="absolute inset-0 bg-primary/20 rounded-2xl backdrop-blur-md"></div>
                 <div className="relative h-full flex items-center justify-center">
@@ -131,7 +164,7 @@ export function SolutionSection() {
             </div>
 
             {/* Característica 2 */}
-            <div className="flex flex-col items-center">
+            <div className="solution-feature flex flex-col items-center">
               <div className="relative w-24 h-24 mb-6">
                 <div className="absolute inset-0 bg-accent/20 rounded-2xl backdrop-blur-md"></div>
                 <div className="relative h-full flex items-center justify-center">
@@ -147,7 +180,7 @@ export function SolutionSection() {
             </div>
 
             {/* Característica 3 */}
-            <div className="flex flex-col items-center">
+            <div className="solution-feature flex flex-col items-center">
               <div className="relative w-24 h-24 mb-6">
                 <div className="absolute inset-0 bg-secondary/20 rounded-2xl backdrop-blur-md"></div>
                 <div className="relative h-full flex items-center justify-center">

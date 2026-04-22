@@ -24,35 +24,47 @@ export function ChallengeSection() {
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: sectionRef.current,
-        start: "top 100%",
-        end: "bottom 100%",
-        scrub: 1,
+        start: "top 80%",
+        toggleActions: "play none none reverse",
       },
     });
 
     tl.fromTo(
       ".challenge-title",
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 0.5 }
+      { opacity: 0, y: 40 },
+      { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }
     )
       .fromTo(
         ".challenge-text",
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 0.5 },
-        "-=0.3"
+        { opacity: 0, y: 40 },
+        { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" },
+        "-=0.4"
       )
       .fromTo(
         ".challenge-icon",
-        { opacity: 0, scale: 0.8 },
-        { opacity: 1, scale: 1, stagger: 0.2, duration: 0.5 },
+        { opacity: 0, scale: 0.9, y: 20 },
+        { opacity: 1, scale: 1, y: 0, stagger: 0.2, duration: 0.6, ease: "back.out(1.7)" },
         "-=0.4"
       )
       .fromTo(
         ".challenge-image",
-        { opacity: 0, x: 50 },
-        { opacity: theme === "dark" ? 0.9 : 0.9, x: 0, duration: 0.1 },
-        "-=0.4"
+        { opacity: 0, x: 100 },
+        { opacity: theme === "dark" ? 0.9 : 0.9, x: 0, duration: 1.2, ease: "power2.out" },
+        "-=0.8"
       );
+
+    // Animación sutil extra para la imagen ligada al scroll
+    gsap.to(".challenge-image img", {
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top bottom",
+        end: "bottom top",
+        scrub: 1,
+      },
+      scale: 1.1,
+      y: 20,
+      ease: "none"
+    });
 
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
@@ -123,15 +135,17 @@ export function ChallengeSection() {
         ref={imageRef}
         className="challenge-image absolute right-0 top-1/2 transform -translate-y-1/2 w-1/2 h-full hidden lg:block"
       >
-        <div className="relative h-full">
+        <div className="relative h-full rounded-l-[4rem] overflow-hidden shadow-2xl">
           <Image
             src="/assets/male-soccer.webp"
             alt="Jugador de fútbol en Manizales"
             fill
             sizes="(min-width: 1024px) 50vw, 100vw"
-            className="object-cover object-center"
+            className="object-cover object-center transition-transform duration-700 hover:scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-l from-transparent to-background"></div>
+          <div className="absolute inset-0 bg-gradient-to-l from-black/20 via-background/60 to-background z-10"></div>
+          {/* Overlay oscuro para mejorar contraste */}
+          <div className="absolute inset-0 bg-black/10 dark:bg-black/30 z-0"></div>
         </div>
       </div>
 
