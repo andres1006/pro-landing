@@ -26,43 +26,42 @@ export function LocalFocusSection() {
       scrollTrigger: {
         trigger: sectionRef.current,
         start: "top 80%",
-        end: "center 60%",
-        scrub: 1,
+        toggleActions: "play none none reverse",
       },
     });
 
     tl.fromTo(
       ".local-title",
       { opacity: 0, y: 40 },
-      { opacity: 1, y: 0, duration: 0.8 }
+      { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }
     )
       .fromTo(
         ".local-text",
         { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 0.8 },
+        { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" },
         "-=0.5"
       )
       .fromTo(
         ".city-map",
-        { opacity: 0, scale: 0.92 },
-        { opacity: 1, scale: 1, duration: 0.8 },
+        { opacity: 0, scale: 0.9, x: 50 },
+        { opacity: 1, scale: 1, x: 0, duration: 1, ease: "power2.out" },
         "-=0.6"
       );
 
     gsap.fromTo(
       ".sport-icon",
-      { opacity: 0, y: 30, scale: 0.95 },
+      { opacity: 0, y: 30, scale: 0.9 },
       {
         opacity: 1,
         y: 0,
         scale: 1,
-        stagger: 0.15,
+        stagger: 0.2,
         duration: 0.6,
+        ease: "back.out(1.5)",
         scrollTrigger: {
           trigger: ".sports-container",
           start: "top 85%",
-          end: "bottom 60%",
-          scrub: 1,
+          toggleActions: "play none none reverse",
         },
       }
     );
