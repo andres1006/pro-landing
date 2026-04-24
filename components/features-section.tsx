@@ -69,41 +69,42 @@ export function FeaturesSection() {
   useEffect(() => {
     if (!sectionRef.current) return;
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: "top 80%",
-        end: "bottom 20%",
-        scrub: 1,
-      },
-    });
-
-    /*   tl.fromTo(
-      ".features-title",
-      { opacity: 0, y: 50 },
-      { opacity: 1, y: 0, duration: 0.8 }
-    ); */
+    // Animación del título y descripción
+    gsap.fromTo(
+      ".features-title, .features-desc",
+      { opacity: 0, y: 40 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        stagger: 0.2,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+          toggleActions: "play none none reverse",
+        },
+      }
+    );
 
     // Animamos las tarjetas de forma secuencial
-    const cards = document.querySelectorAll(".feature-card");
-    cards.forEach((card, i) => {
-      gsap.fromTo(
-        card,
-        { opacity: 0, y: 50 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.5,
-          scrollTrigger: {
-            trigger: card,
-            start: "top 90%",
-            end: "bottom 70%",
-            scrub: 1,
-          },
-          delay: i * 0.1,
-        }
-      );
-    });
+    gsap.fromTo(
+      ".feature-card",
+      { opacity: 0, y: 50, scale: 0.95 },
+      {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: "back.out(1.2)",
+        scrollTrigger: {
+          trigger: ".features-grid",
+          start: "top 85%",
+          toggleActions: "play none none reverse",
+        },
+      }
+    );
 
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
@@ -146,13 +147,13 @@ export function FeaturesSection() {
   return (
     <section
       ref={sectionRef}
-      className="py-10 md:py-25 bg-gradient-to-b from-background to-background/90 relative overflow-hidden"
+      className="py-24 md:py-32 bg-background relative overflow-hidden"
     >
-      {/* Elementos decorativos de fondo */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-1/3 left-1/4 w-32 h-32 bg-primary/10 rounded-full blur-xl"></div>
-        <div className="absolute top-2/3 right-1/3 w-48 h-48 bg-secondary/10 rounded-full blur-xl"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-40 h-40 bg-manizales-tech/10 rounded-full blur-xl"></div>
+      {/* Elementos decorativos (Partículas/Blobs) más grandes y dinámicos */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
+        <div className="absolute top-1/4 left-1/4 w-80 h-80 bg-primary/10 dark:bg-primary/20 rounded-full blur-[80px] animate-float"></div>
+        <div className="absolute top-1/2 right-1/4 w-96 h-96 bg-secondary/10 dark:bg-secondary/20 rounded-full blur-[100px] animate-float animation-delay-2000"></div>
+        <div className="absolute bottom-1/4 left-1/3 w-72 h-72 bg-[#64ffda]/10 dark:bg-[#64ffda]/20 rounded-full blur-[80px] animate-float animation-delay-4000"></div>
       </div>
 
       <div className="container mx-auto px-6">
@@ -160,52 +161,56 @@ export function FeaturesSection() {
           <h2 className="features-title text-4xl md:text-5xl font-bold mb-6 text-black dark:text-white ">
             Todo lo que necesitas para vivir tu pasión como un profesional
           </h2>
-          <p className="text-xl  max-w-3xl mx-auto text-black dark:text-white">
+          <p className="features-desc text-xl max-w-3xl mx-auto text-black dark:text-white">
             PRO está diseñado para potenciar tu experiencia deportiva con
             herramientas que realmente necesitas.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="features-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
           {features.map((feature, index) => (
-            <motion.div
+            <div
               key={index}
-              className={`feature-card bg-gradient-to-br ${feature.color} p-6 rounded-2xl border border-white/10 backdrop-blur-sm hover:shadow-lg transition-all duration-300 h-full`}
+              className={`feature-card relative overflow-hidden bg-white/50 dark:bg-black/40 backdrop-blur-md p-8 rounded-3xl border border-black/5 dark:border-white/10 transition-all duration-500 h-full transform cursor-default group`}
               data-index={index}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              whileHover={{
-                scale: 1.03,
-                boxShadow:
-                  "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-              }}
               onMouseEnter={() => handleCardHover(index)}
+              style={{
+                boxShadow: activeCard === index
+                  ? "0 20px 40px -10px rgba(0,0,0,0.1), 0 0 20px -5px var(--card-glow, rgba(107,70,193,0.2))"
+                  : "0 4px 6px -1px rgba(0, 0, 0, 0.05)",
+                transform: activeCard === index ? "translateY(-8px) scale(1.02)" : "translateY(0) scale(1)",
+              }}
             >
+              {/* Fondo degradado al hacer hover / estar activo */}
               <div
-                className={`mb-6 inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br ${
-                  activeCard === index
-                    ? "from-[#b794f4] via-[#b794f4] to-[#28cbe8]"
-                    : feature.color
-                } shadow-inner`}
-              >
-                <feature.icon
-                  size={32}
-                  className={`text-white ${
-                    activeCard === index ? "animate-pulse-slow" : ""
+                className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-0 transition-opacity duration-500 z-0 ${activeCard === index ? 'opacity-20' : 'group-hover:opacity-10'}`}
+              ></div>
+
+              <div className="relative z-10">
+                <div
+                  className={`mb-6 inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br transition-all duration-500 ${
+                    activeCard === index
+                      ? "from-[#b794f4] via-[#b794f4] to-[#28cbe8] shadow-[0_0_20px_rgba(183,148,244,0.5)] scale-110"
+                      : "from-gray-200 to-gray-100 dark:from-gray-800 dark:to-gray-900 text-gray-500 dark:text-gray-400"
                   }`}
-                />
+                >
+                  <feature.icon
+                    size={32}
+                    className={`transition-colors duration-500 ${
+                      activeCard === index ? "text-white animate-pulse-slow" : "text-gray-600 dark:text-gray-400 group-hover:text-primary"
+                    }`}
+                  />
+                </div>
+
+                <h3 className="text-xl font-bold mb-3 font-heading text-black dark:text-white transition-colors duration-300">
+                  {feature.title}
+                </h3>
+
+                <p className="text-black/80 dark:text-white/80 leading-relaxed">
+                  {feature.description}
+                </p>
               </div>
-
-              <h3 className="text-xl font-bold mb-3 font-heading text-black dark:text-white">
-                {feature.title}
-              </h3>
-
-              <p className=" text-black dark:text-white">
-                {feature.description}
-              </p>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
